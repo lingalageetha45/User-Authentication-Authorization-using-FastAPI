@@ -1,0 +1,51 @@
+# Virtual Environment
+
+venv/
+
+# Python Cache
+
+**pycache**/
+*.py[cod]
+
+# SQLite Database
+
+tasks.db
+
+# Environment Variables
+
+.env
+
+# VS Code
+
+.vscode/
+
+# PyCharm
+
+.idea/
+
+# macOS
+
+.DS_Store
+
+# Logs
+
+*.log
+
+# Distribution Files
+
+build/
+dist/
+*.egg-info/
+
+# Coverage Reports
+
+.coverage
+htmlcov/
+
+# pytest
+
+.pytest_cache/
+
+# Mypy
+
+.mypy_cache/
