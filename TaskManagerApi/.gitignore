@@ -1,51 +1,84 @@
+# ==========================
 # Virtual Environment
-
+# ==========================
 venv/
+env/
+.venv/
 
+# ==========================
 # Python Cache
-
+# ==========================
 __pycache__/
 *.py[cod]
+*$py.class
 
+# ==========================
 # SQLite Database
-
+# ==========================
 tasks.db
+*.db
+*.sqlite3
 
+# ==========================
 # Environment Variables
-
+# ==========================
 .env
+.env.*
 
-# VS Code
-
+# ==========================
+# IDE Settings
+# ==========================
 .vscode/
-
-# PyCharm
-
 .idea/
 
-# macOS
-
+# ==========================
+# Operating System Files
+# ==========================
 .DS_Store
+Thumbs.db
 
+# ==========================
 # Logs
-
+# ==========================
 *.log
 
-# Distribution Files
-
+# ==========================
+# Build / Distribution
+# ==========================
 build/
 dist/
 *.egg-info/
+.eggs/
+pip-wheel-metadata/
 
-# Coverage Reports
-
+# ==========================
+# Testing
+# ==========================
 .coverage
+.coverage.*
 htmlcov/
-
-# pytest
-
 .pytest_cache/
 
-# Mypy
-
+# ==========================
+# Type Checking
+# ==========================
 .mypy_cache/
+.pyre/
+.ruff_cache/
+
+# ==========================
+# Jupyter
+# ==========================
+.ipynb_checkpoints/
+
+# ==========================
+# Temporary Files
+# ==========================
+*.tmp
+*.bak
+*.swp
+
+# ==========================
+# Secrets
+# ==========================
+secret_key.txt

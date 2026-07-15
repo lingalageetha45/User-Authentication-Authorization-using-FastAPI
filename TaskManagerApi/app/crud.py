@@ -1,15 +1,20 @@
 from sqlalchemy.orm import Session
 
-from . import models
-from . import schemas
+from .models import Task, User
+from .schemas import TaskCreate, TaskUpdate
 
 
-def create_task(db: Session, task: schemas.TaskCreate):
+def create_task(
+    db: Session,
+    task: TaskCreate,
+    current_user: User
+):
 
-    db_task = models.Task(
+    db_task = Task(
         title=task.title,
         description=task.description,
-        status=task.status.value
+        status=task.status.value,
+        user_id=current_user.id
     )
 
     db.add(db_task)
@@ -19,18 +24,51 @@ def create_task(db: Session, task: schemas.TaskCreate):
     return db_task
 
 
-def get_tasks(db: Session):
+def get_tasks(
+    db: Session,
+    current_user: User
+):
 
-    return db.query(models.Task).all()
+    return (
+        db.query(Task)
+        .filter(Task.user_id == current_user.id)
+        .all()
+    )
 
 
-def update_task(db: Session, task_id: int, task: schemas.TaskUpdate):
+def get_task(
+    db: Session,
+    task_id: int,
+    current_user: User
+):
 
-    db_task = db.query(models.Task).filter(
-        models.Task.id == task_id
-    ).first()
+    return (
+        db.query(Task)
+        .filter(
+            Task.id == task_id,
+            Task.user_id == current_user.id
+        )
+        .first()
+    )
 
-    if not db_task:
+
+def update_task(
+    db: Session,
+    task_id: int,
+    task: TaskUpdate,
+    current_user: User
+):
+
+    db_task = (
+        db.query(Task)
+        .filter(
+            Task.id == task_id,
+            Task.user_id == current_user.id
+        )
+        .first()
+    )
+
+    if db_task is None:
         return None
 
     db_task.title = task.title
@@ -43,13 +81,23 @@ def update_task(db: Session, task_id: int, task: schemas.TaskUpdate):
     return db_task
 
 
-def delete_task(db: Session, task_id: int):
 
-    db_task = db.query(models.Task).filter(
-        models.Task.id == task_id
-    ).first()
+def delete_task(
+    db: Session,
+    task_id: int,
+    current_user: User
+):
 
-    if not db_task:
+    db_task = (
+        db.query(Task)
+        .filter(
+            Task.id == task_id,
+            Task.user_id == current_user.id
+        )
+        .first()
+    )
+
+    if db_task is None:
         return None
 
     db.delete(db_task)

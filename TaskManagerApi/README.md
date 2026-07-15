@@ -1,54 +1,73 @@
-# Simple FastAPI Task Manager API
+# Task Manager API with JWT Authentication
 
-## Project Overview
-
-This project is a simple Task Manager REST API built using **FastAPI**, **SQLite**, **SQLAlchemy ORM**, and **Pydantic**. It allows users to create, view, update, and delete tasks while demonstrating REST API development, database integration, request validation, and CRUD operations.
+A RESTful Task Manager API built using **FastAPI**, **SQLite**, **SQLAlchemy ORM**, **Pydantic**, and **JWT Authentication**. The API allows users to register, log in, and securely manage their own tasks through protected REST endpoints.
 
 ---
 
-## Objective
+## Features
 
-Develop a backend application that manages tasks using REST APIs with the following features:
+### Authentication
 
-* Create a new task
-* View all tasks
-* Update an existing task
-* Delete a task
+- User Registration (Signup)
+- User Login
+- JWT Authentication
+- Password Hashing using Passlib (bcrypt)
+- Protected Routes
+- Get Current Logged-in User (`/auth/me`)
+
+### Task Management
+
+Authenticated users can:
+
+- Create Tasks
+- View All Tasks
+- View a Single Task
+- Update Tasks
+- Delete Tasks
+
+Each task belongs to the authenticated user, ensuring users can only access and manage their own tasks.
 
 ---
 
-## Technologies Used
+## Tech Stack
 
-* Python 3.x
-* FastAPI
-* SQLite
-* SQLAlchemy ORM
-* Pydantic
-* Uvicorn
+| Technology | Purpose |
+|------------|---------|
+| Python 3.12 | Programming Language |
+| FastAPI | REST API Framework |
+| SQLite | Database |
+| SQLAlchemy | ORM |
+| Pydantic | Data Validation |
+| python-jose | JWT Authentication |
+| Passlib (bcrypt) | Password Hashing |
+| Uvicorn | ASGI Server |
+
+---
+
+## Project Structure
+
+```
+
+> **Note:** `tasks.db` is generated automatically when the application runs and is excluded from Git.
 
 ---
 
 ## Installation
 
-### 1. Clone the repository
+### Clone the Repository
 
 ```bash
-git clone https://github.com/your-username/TaskManagerAPI.git
+git clone https://github.com/<your-github-username>/TaskManagerApi.git
+cd TaskManagerApi
 ```
 
-### 2. Open the project
-
-```bash
-cd TaskManagerAPI
-```
-
-### 3. Create a virtual environment
+### Create a Virtual Environment
 
 ```bash
 python -m venv venv
 ```
 
-### 4. Activate the virtual environment
+### Activate the Virtual Environment
 
 **Windows**
 
@@ -56,13 +75,13 @@ python -m venv venv
 venv\Scripts\activate
 ```
 
-**Linux / macOS**
+**Linux/macOS**
 
 ```bash
 source venv/bin/activate
 ```
 
-### 5. Install dependencies
+### Install Dependencies
 
 ```bash
 pip install -r requirements.txt
@@ -76,7 +95,7 @@ pip install -r requirements.txt
 uvicorn app.main:app --reload
 ```
 
-The application will start at:
+The application will be available at:
 
 ```
 http://127.0.0.1:8000
@@ -84,15 +103,15 @@ http://127.0.0.1:8000
 
 ---
 
-## Swagger Documentation
+## API Documentation
 
-Interactive API documentation:
+### Swagger UI
 
 ```
 http://127.0.0.1:8000/docs
 ```
 
-Alternative documentation:
+### ReDoc
 
 ```
 http://127.0.0.1:8000/redoc
@@ -100,66 +119,106 @@ http://127.0.0.1:8000/redoc
 
 ---
 
-## API Endpoints
+## Authentication Endpoints
 
-| Method | Endpoint           | Description        |
-| ------ | ------------------ | ------------------ |
-| POST   | `/tasks`           | Create a new task  |
-| GET    | `/tasks`           | Retrieve all tasks |
-| PUT    | `/tasks/{task_id}` | Update a task      |
-| DELETE | `/tasks/{task_id}` | Delete a task      |
-
----
-
-## Sample Request
-
-```json
-{
-  "title": "Complete FastAPI Assignment",
-  "description": "Build CRUD APIs using FastAPI",
-  "status": "Pending"
-}
-```
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/auth/signup` | Register a new user |
+| POST | `/auth/login` | Authenticate user and generate JWT token |
+| GET | `/auth/me` | Get the currently logged-in user |
 
 ---
 
-## Sample Response
+## Task Endpoints
 
-```json
-{
-  "id": 1,
-  "title": "Complete FastAPI Assignment",
-  "description": "Build CRUD APIs using FastAPI",
-  "status": "Pending"
-}
-```
-
----
-
-## Features
-
-* RESTful API development
-* CRUD operations
-* SQLite database integration
-* SQLAlchemy ORM
-* Pydantic validation
-* Automatic Swagger documentation
-* Proper HTTP status codes
-* Clean project structure
-* Error handling
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/tasks` | Create a new task |
+| GET | `/tasks` | Retrieve all tasks |
+| GET | `/tasks/{task_id}` | Retrieve a specific task |
+| PUT | `/tasks/{task_id}` | Update a task |
+| DELETE | `/tasks/{task_id}` | Delete a task |
 
 ---
 
-## Future Improvements
+## Security
 
-* Search tasks
-* Filter by status
-* Pagination
-* Authentication
-* Docker support
+- Passwords are securely hashed using Passlib (bcrypt).
+- JWT Authentication protects all task endpoints.
+- Users can only access and manage their own tasks.
+- Proper HTTP status codes are returned for unauthorized or invalid requests.
+
+---
+
+## Dependencies
+
+- FastAPI
+- SQLAlchemy
+- SQLite
+- Pydantic
+- Passlib
+- bcrypt
+- python-jose
+- python-multipart
+- Uvicorn
+
+---
+
+## HTTP Status Codes
+
+| Code | Description |
+|------|-------------|
+| 200 | OK |
+| 201 | Created |
+| 400 | Bad Request |
+| 401 | Unauthorized |
+| 404 | Not Found |
+| 422 | Validation Error |
+| 500 | Internal Server Error |
+
+---
+
+## Assignment Features Implemented
+
+### Authentication
+
+- User Registration
+- User Login
+- JWT Authentication
+- Password Hashing
+- Protected Routes
+- Current User Endpoint
+
+### Task Management
+
+- Create Task
+- View All Tasks
+- View Single Task
+- Update Task
+- Delete Task
+
+### Database
+
+- SQLite Database
+- SQLAlchemy ORM
+- User–Task Relationship
+
+---
+
+## Future Enhancements
+
+- Refresh Token Support
+- Forgot Password
+- Email Verification
+- Search & Filter Tasks
+- Pagination
+- Docker Support
+- Role-Based Access Control (RBAC)
 
 ---
 
 ## Author
 
-Developed as part of the **FastAPI Task Manager API Evaluation Assignment**.
+**Developed by:** Gayathri
+
+Backend Developer Evaluation Assignment built using **FastAPI**, **SQLite**, **SQLAlchemy ORM**, **JWT Authentication**, and **REST APIs**.
